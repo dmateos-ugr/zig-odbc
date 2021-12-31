@@ -95,7 +95,7 @@ pub const Statement = struct {
             @sizeOf(@TypeOf(value)),
             @intCast(c.SQLSMALLINT, decimal_digits orelse 0),
             value, 
-            @sizeOf(@TypeOf(value)),
+            if (io_type == .Input) 0 else @sizeOf(@TypeOf(value)), // 0 if input, I don't know otherwise
             str_len_or_ind_ptr
         );
         return switch (@intToEnum(SqlReturn, result)) {
